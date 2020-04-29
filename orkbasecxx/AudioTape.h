@@ -130,6 +130,7 @@ public:
 	CStdString m_localIp;
 	CStdString m_remoteIp;
 	CStdString m_trackingId;
+        CStdString m_contactId;
 	CStdString m_nativeCallId;
 	StateEnum m_state;
 	int m_numErrors;
