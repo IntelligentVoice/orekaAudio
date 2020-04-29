@@ -97,7 +97,7 @@ void Iax2Session::GenerateOrkUid()
 	int month = texp.tm_mon + 1;				// january=0, decembre=11
 	int year = texp.tm_year + 1900;
 
-	m_orkUid.Format("%s_%.4d%.2d%.2d_%.2d%.2d%.2d_%s", m_new->m_caller, year, month, texp.tm_mday,texp.tm_hour, texp.tm_min, texp.tm_sec, m_trackingId);
+        m_orkUid.Format("%.4d%.2d%.2d_%.2d%.2d%.2d_%s", year, month, texp.tm_mday,texp.tm_hour, texp.tm_min, texp.tm_sec, m_trackingId);
 }
 
 /* We index with the invitor because the invitor is the first party
