@@ -13,7 +13,7 @@
 #pragma warning( disable: 4786 )
 
 #define _WINSOCKAPI_		// prevents the inclusion of winsock.h
-#include <dir.h>
+#include <unistd.h>
 #include "Utils.h"
 #include "ThreadSafeQueue.h"
 #include "LogManager.h"
