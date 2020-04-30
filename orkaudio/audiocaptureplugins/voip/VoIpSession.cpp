@@ -304,7 +304,6 @@ void VoIpSession::Start()
 	startEvent->m_type = CaptureEvent::EtStart;
 	startEvent->m_timestamp = m_beginDate;
 	startEvent->m_value = m_trackingId;
-        startEvent->m_contact = m_invite->m_contact;
 	CStdString timestamp = IntToString(startEvent->m_timestamp);
 	LOG4CXX_INFO(m_log,  "[" + m_trackingId + "] " + m_capturePort + " " + ProtocolToString(m_protocol) + " Session start, timestamp:" + timestamp);
 	g_captureEventCallBack(startEvent, m_capturePort);

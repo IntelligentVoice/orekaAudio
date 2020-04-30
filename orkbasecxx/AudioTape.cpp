@@ -397,7 +397,6 @@ void AudioTape::AddCaptureEvent(CaptureEventRef eventRef, bool send)
 	{
 	case CaptureEvent::EtStart:
 		m_trackingId = eventRef->m_value;
-                m_contactId = eventRef->m_contact;
 		if (m_state == StateCreated)
 		{
 			// Media chunk stream not yet started, we can update begin date with the actual capture begin date
@@ -759,7 +758,7 @@ void AudioTape::GenerateCaptureFilePathAndIdentifier()
 
 	m_filePath.Format("%.4d/%.2d/%.2d/%.2d/", year, month, date.tm_mday,date.tm_hour);
 
-	m_fileIdentifier.Format("%s_%.4d%.2d%.2d_%.2d%.2d%.2d_%s", m_contactId, year, month, date.tm_mday,date.tm_hour, date.tm_min, date.tm_sec, m_portId);
+	m_fileIdentifier.Format("%.4d%.2d%.2d_%.2d%.2d%.2d_%s", year, month, date.tm_mday,date.tm_hour, date.tm_min, date.tm_sec, m_portId);
 
 	m_year.Format("%.4d", year);
 	m_day.Format("%.2d", date.tm_mday);
