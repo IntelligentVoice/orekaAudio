@@ -13,7 +13,7 @@
 #pragma warning( disable: 4786 )
 
 #define _WINSOCKAPI_		// prevents the inclusion of winsock.h
-
+#include <dir.h>
 #include "Utils.h"
 #include "ThreadSafeQueue.h"
 #include "LogManager.h"
@@ -294,7 +294,18 @@ void AudioTape::Write()
 					if (m_state == StateActive)
 					{
 						// A file format was successfully added to the tape, open it
-						CStdString file = CONFIG.m_audioOutputPathMcf + "/" + m_filePath + m_fileIdentifier;
+                                                logMsg.Format("Experiment started asaf");
+                                                LOG4CXX_INFO(LOG.tapeLog, logMsg);
+                                                struct ffblk ffblk;
+                                                char filename[50],buffer[MAXPATH];
+                                                chdir (CONFIG.m_audioOutputPathMcf + "/" + m_filePath); 
+                                                int done = findfirst("*_" + m_fileIdentifier, &ffblk, 0);
+                                                strcpy(fileName, ffblk.ff_name); 
+                                                logMsg.Format("[%s] chosen fileName is: ", fileName);
+                                                LOG4CXX_INFO(LOG.tapeLog, logMsg);
+						CStdString file = CONFIG.m_audioOutputPathMcf + "/" + m_filePath + fileName;
+                                                logMsg.Format("[%s] chosen file is: ", file)
+                                                LOG4CXX_INFO(LOG.tapeLog, logMsg);                                                 
 
 						// Prevent identifier collision
 						CStdString path = CONFIG.m_audioOutputPath + "/" + m_filePath;
