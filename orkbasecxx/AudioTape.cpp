@@ -181,7 +181,7 @@ AudioTape::AudioTape(CStdString &portId, CStdString& file)
 
 	// Create the audiofile
 	m_audioFileRef.reset(new MediaChunkFile());
-        logMsg.Format("====================== chunk reff: %s", file); 
+        logMsg.Format("====================== m_audioFileRef set file name: %s", file); 
         LOG4CXX_INFO(LOG.tapeLog, logMsg);
 	m_audioFileRef->SetFilename(file);
 }
@@ -711,7 +711,7 @@ void AudioTape::PopulateTapeMessage(TapeMsg* msg, CaptureEvent::EventTypeEnum ev
 
 	msg->m_recId = m_orkUid;
 	msg->m_fileName = m_filePath + m_fileIdentifier + m_fileExtension;
-        logMsg.Format("=======FILE NAME IS %s", m_filePath + m_fileIdentifier + m_fileExtension);
+        logMsg.Format("PopulateTapeMessage FILE NAME IS %s", m_filePath + m_fileIdentifier + m_fileExtension);
         LOG4CXX_INFO(LOG.tapeLog, logMsg);
 	msg->m_stage = CaptureEvent::EventTypeToString(eventType);
 	msg->m_capturePort = m_portId;
