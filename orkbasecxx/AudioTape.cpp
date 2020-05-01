@@ -181,6 +181,8 @@ AudioTape::AudioTape(CStdString &portId, CStdString& file)
 
 	// Create the audiofile
 	m_audioFileRef.reset(new MediaChunkFile());
+        logMsg.Format("====================== chunk reff: %s", file); 
+        LOG4CXX_INFO(LOG.tapeLog, logMsg);
 	m_audioFileRef->SetFilename(file);
 }
 
@@ -300,43 +302,6 @@ void AudioTape::Write()
 					}
 					if (m_state == StateActive)
 					{
-                                                //CStdString file = CONFIG.m_audioOutputPathMcf + "/" + m_filePath + m_fileIdentifier; 
-                                                // A file format was successfully added to the tape, open it
-                                                //DIR *dir;
-                                                //struct dirent *ent;
-                                                //const char *trimmedFileName = "";
-                                                //int index = 0;
-                    
-                                                //if ((dir = opendir (CONFIG.m_audioOutputPathMcf + "/" + m_filePath)) != NULL) {
-                                                //      logMsg.Format("File picker starts");
-                                                //      LOG4CXX_INFO(LOG.tapeLog, logMsg);
-                                                      
-                                                //    while ((ent = readdir (dir)) != NULL) {
-                                                //        char charArray[100];
-                                                //        strcpy(charArray, ent->d_name); //casting for strtok use 
-                                                //        char* charsSplit = strtok(charArray, "_"); // split
-                                                //        while(charsSplit)
-                                                //        {
-                                                //          if (index == 1) {
-                                                //             trimmedFileName = charsSplit;
-
-                                                 //         }
-
-                                                 //        charsSplit = strtok(NULL, "");
-                                                 //        index++;
-
-                                                 //       }
-
-                                                 //       if (ent->d_type != DT_DIR && strcmp(trimmedFileName, m_fileIdentifier) == 0){
-                                                 //          CStdString file = CONFIG.m_audioOutputPathMcf + "/" + m_filePath + ent->d_name;
-                                                 //          logMsg.Format("[%s] picked a file", ent->d_name);
-                                                 //          LOG4CXX_INFO(LOG.tapeLog, logMsg);
-
-                                                //       }
-                                                //   }
-                                                //closedir (dir);
-                                                //}
-                                                // file with the old format
                                                 CStdString file = CONFIG.m_audioOutputPathMcf + "/" + m_filePath + m_fileIdentifier;
                                                 logMsg.Format("======================  Writing into file: %s", file);
                                                 LOG4CXX_INFO(LOG.tapeLog, logMsg);
@@ -478,6 +443,9 @@ void AudioTape::AddCaptureEvent(CaptureEventRef eventRef, bool send)
 			atd.m_remoteIp = m_remoteIp;
 			atd.m_onDemand = m_onDemand;
 			atd.m_filename = GetFilename();
+                        logMsg.Format("on stop tape ======= get file name: %s", atd.m_filename);
+                        LOG4CXX_INFO(LOG.tapeLog, logMsg); 
+                        GetFilename() 
 			CStdString description = atd.SerializeSingleLine();
 			LOG4CXX_INFO(LOG.tapelistLog, description);
 		}
@@ -743,6 +711,8 @@ void AudioTape::PopulateTapeMessage(TapeMsg* msg, CaptureEvent::EventTypeEnum ev
 
 	msg->m_recId = m_orkUid;
 	msg->m_fileName = m_filePath + m_fileIdentifier + m_fileExtension;
+        logMsg.Format("=======FILE NAME IS %s", m_filePath + m_fileIdentifier + m_fileExtension);
+        LOG4CXX_INFO(LOG.tapeLog, logMsg);
 	msg->m_stage = CaptureEvent::EventTypeToString(eventType);
 	msg->m_capturePort = m_portId;
 	msg->m_localParty = m_localParty;
@@ -806,6 +776,10 @@ void AudioTape::GenerateCaptureFilePathAndIdentifier()
 	m_filePath.Format("%.4d/%.2d/%.2d/%.2d/", year, month, date.tm_mday,date.tm_hour);
 
 	m_fileIdentifier.Format("%.4d%.2d%.2d_%.2d%.2d%.2d_%s", year, month, date.tm_mday,date.tm_hour, date.tm_min, date.tm_sec, m_portId);
+        logMsg.Format("file identifier:  %s", m_filePath + m_fileIdentifier + m_fileExtension);
+        LOG4CXX_INFO(LOG.tapeLog, logMsg);
+        
+        
 
 	m_year.Format("%.4d", year);
 	m_day.Format("%.2d", date.tm_mday);
